@@ -1,0 +1,47 @@
+#include "../include/minitalk.h"
+#include <stdio.h>
+
+/*
+    * The server process waits for signals from clients. (SIGUSR1 = 1 and SIGUSR2 = 0)
+    * It prints the PID of the server process to the console.
+    * IT needs to have handlers for the signals to process incoming data.
+    * The server will run indefinitely, waiting for signals.
+*/
+
+/* void handler(int sig) {
+    static unsigned char c = 0;
+    static int bit_count = 0;
+    
+    if (sig == SIGUSR1)
+        c |= (0 << bit_count);
+    else if (sig == SIGUSR2)
+        c |= (1 << bit_count);
+    
+    bit_count++;
+    if (bit_count == 8) {
+        write(1, &c, 1);
+        c = 0;
+        bit_count = 0;
+    }
+} */
+
+int main(void)
+{
+    struct sigaction sa; // is used to handle signals
+    //ft_printf("The PID of the server is: %d\n", getpid());
+    printf("The PID of the server is: %d\n", getpid());
+
+    sa.sa_handler = handler;
+    sigemptyset(&sa.sa_mask);
+    sa.sa_flags = 0;
+
+    sigaction(SIGUSR1, &sa, NULL);
+    sigaction(SIGUSR2, &sa, NULL);
+
+    while(1)
+        pause(); // Wait for signals
+
+    return(EXIT_SUCCESS);
+}
+
+
