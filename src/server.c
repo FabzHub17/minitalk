@@ -13,11 +13,15 @@
 #include "../include/minitalk.h"
 #include <stdio.h>
 
+
 /*
     * The server process waits for signals from clients. (SIGUSR1 = 1 and SIGUSR2 = 0)
     * It prints the PID of the server process to the console.
     * IT needs to have handlers for the signals to process incoming data.
     * The server will run indefinitely, waiting for signals.
+    * in computer science, a signal is a message that is sent to a process to indicate 
+    * ->a particular event has occurred or to request a particular action to be taken. 
+    * ->A process is a program that is being executed by the computer.
 */
 
 /* void handler(int sig) {
@@ -39,7 +43,7 @@
 
 int main(void)
 {
-    struct sigaction sa; // is used to handle signals
+    struct sigaction sa; 
     //ft_printf("The PID of the server is: %d\n", getpid());
     printf("The PID of the server is: %d\n", getpid());
 
