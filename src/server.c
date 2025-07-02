@@ -13,7 +13,6 @@
 #include "../include/minitalk.h"
 #include <stdio.h>
 
-
 /*
     * The server process waits for signals from clients. (SIGUSR1 = 1 and SIGUSR2 = 0)
     * It prints the PID of the server process to the console.
@@ -24,22 +23,25 @@
     * ->A process is a program that is being executed by the computer.
 */
 
-/* void handler(int sig) {
-    static unsigned char c = 0;
-    static int bit_count = 0;
-    
-    if (sig == SIGUSR1)
-        c |= (0 << bit_count);
-    else if (sig == SIGUSR2)
+void sig_handler(int sig)
+{
+    static int bit_count;
+    static unsigned char c;
+
+    bit_count = 0;
+    c = 0;
+
+    if(sig == SIGUSR1)
         c |= (1 << bit_count);
-    
-    bit_count++;
-    if (bit_count == 8) {
-        write(1, &c, 1);
-        c = 0;
+    if(bit_count == 8)
+    {
+        write(1,&c,1);  //  Da cambiare poi dopo
         bit_count = 0;
+        c = 0;
+        // TODO BONUS
     }
-} */
+}
+
 
 int main(void)
 {
@@ -47,7 +49,7 @@ int main(void)
     //ft_printf("The PID of the server is: %d\n", getpid());
     printf("The PID of the server is: %d\n", getpid());
 
-    sa.sa_handler = handler;
+    sa.sa_handler = sig_handler;
     sigemptyset(&sa.sa_mask);
     sa.sa_flags = 0;
 
