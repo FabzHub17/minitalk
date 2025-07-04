@@ -23,11 +23,10 @@ void send_char(pid_t pid, char c)
             kill(pid, SIGUSR1);
         else
             kill(pid,SIGUSR2);
-        usleep(100); // Delay per sicurezza
+        usleep(500); // Delay per sicurezza
         // TODO BONUS: qui potresti aspettare un segnale di ACK dal server
         i--;
     }
-
 }
 
 int main(int ac, char **av)
@@ -47,5 +46,8 @@ int main(int ac, char **av)
         send_char(pid, msg[i]);
         i++;
     }
+    send_char(pid, '\0'); // Send null terminator
+    
+    return(EXIT_SUCCESS);
     
 }
