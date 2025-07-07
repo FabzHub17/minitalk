@@ -29,7 +29,7 @@ OBJ_CLIENT = $(SRC_CLIENT:.c=.o)
 
 $(NAME_SERVER): $(LIBFT) $(OBJ_SERVER)
 		@$(CC) $(CFLAGS) -o $@ $^ $(LIBFT_FLAG)
-		@echo "$(NAME_CLIENT) OK!"
+		@echo "$(NAME_SERVER) OK!"
 
 $(NAME_CLIENT): $(LIBFT) $(OBJ_CLIENT)
 		@$(CC) $(CFLAGS) -o $@ $^ $(LIBFT_FLAG)

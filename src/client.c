@@ -38,7 +38,7 @@ int main(int ac, char **av)
     char *msg;
     int i;
 
-    pid = atoi(av[1]); // DA CAMBIARE DOPO
+    pid = ft_atoi(av[1]); 
     msg = av[2];
     i = 0;
     while(msg[i])
@@ -47,7 +47,7 @@ int main(int ac, char **av)
         i++;
     }
     send_char(pid, '\0'); // Send null terminator
-    
+
     return(EXIT_SUCCESS);
     
 }
