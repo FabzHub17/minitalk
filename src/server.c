@@ -27,8 +27,8 @@ void sig_handler(int sig, siginfo_t *info, void *context)
 
     if(sig == SIGUSR1)
         c |= (1 << (7 - bit_count));
-    else if(sig == SIGUSR2)
-        ; // bit 0, non serve modificare 'c'
+    //else if(sig == SIGUSR2)
+    //    ; // bit 0, non serve modificare 'c'
     bit_count++;
 
     if(bit_count == 8)

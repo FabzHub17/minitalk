@@ -19,6 +19,6 @@
 #include <signal.h>
 #include <stdlib.h>
 
-#include <stdio.h>. // needed?
+#include <stdio.h> // needed?
 
 #endif
