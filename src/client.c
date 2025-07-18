@@ -12,6 +12,14 @@
 
 #include "../include/minitalk.h"
 
+static volatile sig_atomic_t g_ack_received = 0;
+
+void ack_handler(int sig)
+{
+    (void)sig;
+    g_ack_received = 1;
+}
+
 void send_char(pid_t pid, char c)
 {
     int i;
@@ -19,12 +27,23 @@ void send_char(pid_t pid, char c)
     i = 7;
     while( i >= 0)
     {
+        g_ack_received = 0;
+
         if((c >> i) & 1)
-            kill(pid, SIGUSR1);
+        {   
+            if(kill(pid, SIGUSR1) == -1)
+                perror("kill");
+
+        }
         else
-            kill(pid,SIGUSR2);
-        usleep(500); // Delay per sicurezza
-        // TODO BONUS: qui potresti aspettare un segnale di ACK dal server
+        {
+            if(kill(pid, SIGUSR2) == -1)
+                perror("kill");
+        }
+        
+        // wait for acknowledgment from server
+        while(!g_ack_received)
+            usleep(500); 
         i--;
     }
 }
@@ -37,6 +56,13 @@ int main(int ac, char **av)
     pid_t pid;
     char *msg;
     int i;
+    struct sigaction sa;
+
+    // set up signal handler for acknowledgtements
+    sa.sa_handler = ack_handler;
+    sigemptyset(&sa.sa_mask);
+    sa.sa_flags = 0;
+    sigaction(SIGUSR1,&sa,NULL);
 
     pid = ft_atoi(av[1]); 
     msg = av[2];
