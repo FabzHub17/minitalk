@@ -15,7 +15,7 @@ NAME_SERVER = server
 
 CC = gcc
 RM = rm -f
-CFLAGS = -Wall -Wextra -Werror 
+CFLAGS = -Wall -Wextra -Werror -Iinclude
 
 LIBFT_PATH=./libft
 LIBFT = $(LIBFT_PATH)/libft.a
@@ -26,6 +26,8 @@ SRC_CLIENT = ./src/client.c
 
 OBJ_SERVER = $(SRC_SERVER:.c=.o)
 OBJ_CLIENT = $(SRC_CLIENT:.c=.o)
+
+all: $(NAME_SERVER) $(NAME_CLIENT)	
 
 $(NAME_SERVER): $(LIBFT) $(OBJ_SERVER)
 		@$(CC) $(CFLAGS) -o $@ $^ $(LIBFT_FLAG)
@@ -40,8 +42,6 @@ $(LIBFT):
 
 %.o: %.c
 	@$(CC) $(CFLAGS) -c $< -o $@
-
-all: $(NAME_SERVER) $(NAME_CLIENT)	
 
 clean: 
 		@$(RM) $(OBJ_SERVER) $(OBJ_CLIENT)
